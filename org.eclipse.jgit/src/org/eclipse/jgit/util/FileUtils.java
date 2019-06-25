@@ -50,7 +50,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
@@ -71,6 +70,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
+import java.time.Instant;
 
 import org.eclipse.jgit.internal.JGitText;
 import org.eclipse.jgit.lib.Constants;
@@ -939,8 +939,6 @@ public class FileUtils {
 	 * @since 5.2.3
 	 */
 	public static void touch(Path f) throws IOException {
-		try (OutputStream fos = Files.newOutputStream(f)) {
-			// touch the file
-		}
+		Files.setLastModifiedTime(f, FileTime.from(Instant.now()));
 	}
 }
